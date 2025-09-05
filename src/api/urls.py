@@ -11,7 +11,6 @@ router.register(r"todos", views.TodoViewSet)
 app_name = "api"
 urlpatterns = [
     path("", include(router.urls)),
-    path("health", views.health, name="health"), # API Health check endpoint
-    path('metrics', views.metrics, name='metrics'), 
+    path("health", views.health, name="health"), # API Health check endpoint 
     path("ready", views.ready, name="ready"),
 ]

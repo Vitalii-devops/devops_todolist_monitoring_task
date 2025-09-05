@@ -80,15 +80,11 @@ def ready(request):
         return HttpResponse("Readiness OK", content_type="text/plain")
 
 
-GET_REQUESTS = Counter('http_get_requests_total', 'Total GET requests')
-POST_REQUESTS = Counter('http_post_requests_total', 'Total POST requests')
+http_requests_total = Counter('http_requests_total', 'Total HTTP requests', ['method'])
 
 def count_requests(get_response):
     def middleware(request):
-        if request.method == "GET":
-            GET_REQUESTS.inc()
-        elif request.method == "POST":
-            POST_REQUESTS.inc()
+        http_requests_total.labels(method=request.method).inc()
         return get_response(request)
     return middleware
 
